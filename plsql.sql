@@ -1,420 +1,421 @@
-/* ----- DDL ----- */
-/* creating table */
+----- ORACLE - PL/SQL NOTLARIM -----  
+-- create table 
 create table demotable (
-id number(10) not null, /* not null -> not empty */
-name varchar2(100) not null,
-mail varchar2(100),
-city varchar2(50),
-constraint pk primary key (id) /* constraint primary key */
+   id number(10) not null, -- not null -> not empty  
+   name varchar2(100) not null,
+   mail varchar2(100),
+   city varchar2(50),
+   constraint pk primary key (id) -- constraint primary key  
 );
 
-/* drop table */
-drop table rcoban_demo /* geri dönüşüm yapılabilir */
-drop table rcoban_demo purge; /* geri dönüşüm yapılamaz */
+-- drop table  
+drop table rcoban_demo -- geri dönüşüm yapılabilir  
+drop table rcoban_demo purge; -- geri dönüşüm yapılamaz  
 
-/* insert */
-insert into demotable values(2,'recep','recep@mail.com','istanbul',to_date('20121010','YYYYMMDD'));
+-- insert  
+INSERT INTO DEMOTABLE
+VALUES
+   (2,
+    'recep',
+    'recep@mail.com',
+    'istanbul',
+    TO_DATE('20121010', 'YYYYMMDD'));
 
-/* rename table */
+-- rename table 
 rename rcoban_demo to demotable
 
-/* update */
-update demotable set city='izmir' where id=1
+-- update 
+UPDATE DEMOTABLE SET CITY = 'izmir' WHERE ID = 1
 
-/* delete */
-delete from demotable where id=2
+-- delete  
+DELETE FROM DEMOTABLE WHERE ID = 2
 
-/* select */
-select * from demotable
+-- select  
+SELECT * FROM DEMOTABLE
 
-/* select(rename columns) */
-select id as ID, Name as Name, MAIL as Mail, CITY as City, birthday as Birthday from demotable
+-- select(rename columns)  
+SELECT ID       AS ID,
+       NAME     AS NAME,
+       MAIL     AS MAIL,
+       CITY     AS CITY,
+       BIRTHDAY AS BIRTHDAY
+  FROM DEMOTABLE
 
-/* alter operations */ 
-alter table demotable add salary number default 0
+-- alter operations  
+alter table demotable add salary number default 0;
 
-alter table demotable modify (mail varchar2(100))
+alter table demotable modify (mail varchar2(100));
 
-alter table demotable drop column salary
+alter table demotable drop column salary;
 
-alter table demotable rename column name to demo_name
+alter table demotable rename column name to demo_name;
 
-/* procedure */
-CREATE OR REPLACE PROCEDURE pro_insert_demo(
-     demo_id IN demotable.demo_id%TYPE,
-     demo_name IN demotable.demo_name%TYPE,
-     mail IN demotable.mail%TYPE,
-     city IN demotable.city%TYPE,
-     birth IN demotable.birth%TYPE)
-IS
+-- procedure  
+CREATE OR REPLACE PROCEDURE PRO_INSERT_DEMO(DEMO_ID   IN DEMOTABLE.DEMO_ID%TYPE,
+                                            DEMO_NAME IN DEMOTABLE.DEMO_NAME%TYPE,
+                                            MAIL      IN DEMOTABLE.MAIL%TYPE,
+                                            CITY      IN DEMOTABLE.CITY%TYPE,
+                                            BIRTH     IN DEMOTABLE.BIRTH%TYPE) IS
 BEGIN
-  INSERT INTO demotable 
-  VALUES (demo_id, demo_name, mail, city, birth);
+   INSERT INTO DEMOTABLE VALUES (DEMO_ID, DEMO_NAME, MAIL, CITY, BIRTH);
 END;
 
 -- execute the proc
-/* right click on proc name select test enter the value and ok */
+-- right click on proc name select test enter the value and ok  
 
--------------
+--****************************--
 
 -- anonim bir sorgu, yapı olarak genellikle bu şekildedir.
-declare 
-tarih date;
-begin 
-select sysdate into tarih from dual;
-dbms_output.put_line(tarih);
-end;
+DECLARE
+   TARIH DATE;
+BEGIN
+   SELECT SYSDATE INTO TARIH FROM DUAL;
+   DBMS_OUTPUT.PUT_LINE(TARIH);
+END;
 
 -- değişken tanımlama
-declare
-deger varchar2(100) := 'hello';
-begin
-dbms_output.put_line(deger || ' world');
-end;
+DECLARE
+   DEGER VARCHAR2(100) := 'hello';
+BEGIN
+   DBMS_OUTPUT.PUT_LINE(DEGER || ' world');
+END;
 
 -- for döngüsü kullanımı
-begin
-for i in (select * from demotable where demo_name like 'r%')
-loop
-dbms_output.put_line(i.demo_name);
-end loop;
-end;
+BEGIN
+   FOR I IN (SELECT * FROM DEMOTABLE WHERE DEMO_NAME LIKE 'r%') LOOP
+      DBMS_OUTPUT.PUT_LINE(I.DEMO_NAME);
+   END LOOP;
+END;
 
 -- if then yapısı kullanımı
-declare
-myage number := 28;
-begin
-if myage < 11
- then
-    dbms_output.put_line(myage ||', I am a child '); 
- else
-    dbms_output.put_line(myage ||', I am not a child ');
-end if;
-end;
+DECLARE
+   MYAGE NUMBER := 28;
+BEGIN
+   IF MYAGE < 11 THEN
+      DBMS_OUTPUT.PUT_LINE(MYAGE || ', I am a child ');
+   ELSE
+      DBMS_OUTPUT.PUT_LINE(MYAGE || ', I am not a child ');
+   END IF;
+END;
 
 -- fonksiyon kullanımı
-create function fonk(deger in varchar2)
-return varchar2
-is
-begin 
-return deger;
-end;
+CREATE FUNCTION FONK(DEGER IN VARCHAR2) RETURN VARCHAR2 IS
+BEGIN
+   RETURN DEGER;
+END;
 
 -- constant kullanımı
-declare 
-num constant number(5,2) := 100.15;
-begin
--- num := 20;
-dbms_output.put_line(num);
-end;
+DECLARE
+   NUM CONSTANT NUMBER(5, 2) := 100.15;
+BEGIN
+   -- num := 20;
+   DBMS_OUTPUT.PUT_LINE(NUM);
+END;
 
 -- aritmetik operatörler
-declare 
-num1 number := 10;
-num2 number := 5;
-num3 number;
-begin
-num3 := num1 + num2; -- +
-dbms_output.put_line(num3);
-num3 := num1 - num2; -- -
-dbms_output.put_line(num3);
-num3 := num1 * num2; -- * 
-dbms_output.put_line(num3);
-num3 := num1 / num2; -- /
-dbms_output.put_line(num3);
-num3 := num1 ** num2; -- **
-dbms_output.put_line(num3);
-end;
+DECLARE
+   NUM1 NUMBER := 10;
+   NUM2 NUMBER := 5;
+   NUM3 NUMBER;
+BEGIN
+   NUM3 := NUM1 + NUM2; -- +
+   DBMS_OUTPUT.PUT_LINE(NUM3);
+   NUM3 := NUM1 - NUM2; -- -
+   DBMS_OUTPUT.PUT_LINE(NUM3);
+   NUM3 := NUM1 * NUM2; -- * 
+   DBMS_OUTPUT.PUT_LINE(NUM3);
+   NUM3 := NUM1 / NUM2; -- /
+   DBMS_OUTPUT.PUT_LINE(NUM3);
+   NUM3 := NUM1 ** NUM2; -- **
+   DBMS_OUTPUT.PUT_LINE(NUM3);
+END;
 
 -- karşılaştırma operatörleri
-declare
-num1 number := 10;
-num2 number := 20;
-begin 
-if num1 > num2 then -- buyuk , < kucuk , = esit , != esit degil , >= buyuk esit ,
-dbms_output.put_line('buyuk');
-else
-dbms_output.put_line('''kucuk''');
-end if;
-end;
+DECLARE
+   NUM1 NUMBER := 10;
+   NUM2 NUMBER := 20;
+BEGIN
+   IF NUM1 > NUM2 THEN
+      -- buyuk , < kucuk , = esit , != esit degil , >= buyuk esit ,
+      DBMS_OUTPUT.PUT_LINE('buyuk');
+   ELSE
+      DBMS_OUTPUT.PUT_LINE('''kucuk''');
+   END IF;
+END;
 
 -- for döngüsü kullanımı
 DECLARE
-   i number(1);
-   j number(1);
+   I NUMBER(1);
+   J NUMBER(1);
 BEGIN
-   << outer_loop >> -- zorunlu degil
-   FOR i IN 1..3 LOOP
-      << inner_loop >> -- zorunlu degil
-      FOR j IN 1..3 LOOP
-          if j = 2 then
-             -- exit;  -- exit
-             continue; -- continue
-          end if;
-         dbms_output.put_line('i is: '|| i || ' and j is: ' || j);
-      END loop inner_loop;
-   END loop outer_loop;
+   <<OUTER_LOOP>> -- zorunlu degil
+   FOR I IN 1 .. 3 LOOP
+      <<INNER_LOOP>> -- zorunlu degil
+      FOR J IN 1 .. 3 LOOP
+         IF J = 2 THEN
+            -- exit;  -- exit
+            CONTINUE; -- continue
+         END IF;
+         DBMS_OUTPUT.PUT_LINE('i is: ' || I || ' and j is: ' || J);
+      END LOOP INNER_LOOP;
+   END LOOP OUTER_LOOP;
 END;
 
 -- diziler
 -- pl/sql de dizilerin isdisleri 1 den başlar
 DECLARE
-   type namesarray IS VARRAY(5) OF VARCHAR2(10);
-   type grades IS VARRAY(5) OF INTEGER;
-   names namesarray;
-   marks grades;
-   total integer;
+   TYPE NAMESARRAY IS VARRAY(5) OF VARCHAR2(10);
+   TYPE GRADES IS VARRAY(5) OF INTEGER;
+   NAMES NAMESARRAY;
+   MARKS GRADES;
+   TOTAL INTEGER;
 BEGIN
-   names := namesarray('Kavita', 'Pritam', 'Ayan', 'Rishav', 'Aziz');
-   marks := grades(98, 97, 78, 87, 92);
-   total := names.count;
-   dbms_output.put_line('Total '|| total || ' Students');
-   FOR i in 1 .. total LOOP
-      dbms_output.put_line('Student: ' || names(i) || '
-      Marks: ' || marks(i));
+   NAMES := NAMESARRAY('Kavita', 'Pritam', 'Ayan', 'Rishav', 'Aziz');
+   MARKS := GRADES(98, 97, 78, 87, 92);
+   TOTAL := NAMES.COUNT;
+   DBMS_OUTPUT.PUT_LINE('Total ' || TOTAL || ' Students');
+   FOR I IN 1 .. TOTAL LOOP
+      DBMS_OUTPUT.PUT_LINE('Student: ' || NAMES(I) || '
+      Marks: ' || MARKS(I));
    END LOOP;
 END;
 
 -- dizi örneği
 DECLARE
-   CURSOR c_demo is
-   SELECT  demo_name FROM demotable;
-   type c_list is varray (6) of demotable.demo_name%type;
-   name_list c_list := c_list();
-   counter integer :=0;
+   CURSOR C_DEMO IS
+      SELECT DEMO_NAME FROM DEMOTABLE;
+   TYPE C_LIST IS VARRAY(6) OF DEMOTABLE.DEMO_NAME%TYPE;
+   NAME_LIST C_LIST := C_LIST();
+   COUNTER   INTEGER := 0;
 BEGIN
-   FOR n IN c_demo LOOP
-      counter := counter + 1;
-      name_list.extend;
-      name_list(counter)  := n.demo_name;
-      dbms_output.put_line('Demo('||counter ||'):'||name_list(counter));
+   FOR N IN C_DEMO LOOP
+      COUNTER := COUNTER + 1;
+      NAME_LIST.EXTEND;
+      NAME_LIST(COUNTER) := N.DEMO_NAME;
+      DBMS_OUTPUT.PUT_LINE('Demo(' || COUNTER || '):' ||
+                           NAME_LIST(COUNTER));
    END LOOP;
 END;
 
 -- prosedür kullanımı
-CREATE OR REPLACE PROCEDURE hello_mesaji
-AS
+CREATE OR REPLACE PROCEDURE HELLO_MESAJI AS
 BEGIN
-   dbms_output.put_line('Hello World!');
+   DBMS_OUTPUT.PUT_LINE('Hello World!');
 END;
 -- pro. çalıştırma
-begin
-hello_mesaji;
-end;
+BEGIN
+HELLO_MESAJI;
+END;
 
 --
 DECLARE
-   a number;
-   b number;
-   c number;
+   A NUMBER;
+   B NUMBER;
+   C NUMBER;
 
-PROCEDURE findMin(x IN number, y IN number, z OUT number) IS
-BEGIN
-   IF x < y THEN
-      z:= x;
-   ELSE
-      z:= y;
-   END IF;
-END; 
+   PROCEDURE FINDMIN(X IN NUMBER, Y IN NUMBER, Z OUT NUMBER) IS
+   BEGIN
+      IF X < Y THEN
+         Z := X;
+      ELSE
+         Z := Y;
+      END IF;
+   END;
 
 BEGIN
-   a:= 23;
-   b:= 45;
-   findMin(a, b, c);
-   dbms_output.put_line(' Minimum of (23, 45) : ' || c);
+   A := 23;
+   B := 45;
+   FINDMIN(A, B, C);
+   DBMS_OUTPUT.PUT_LINE(' Minimum of (23, 45) : ' || C);
 END;
 
 -- kare hesaplayan proc.
-declare
-  a number;
-  b number;
-  procedure calcSquare(a in number) is
-  begin
-    b := a * a;
-  end;
-begin
-  a := 4;
-  calcSquare(a);
-  dbms_output.put_line('square of ' || a || ' is ' || b);
-end;
+DECLARE
+   A NUMBER;
+   B NUMBER;
+   PROCEDURE CALCSQUARE(A IN NUMBER) IS
+   BEGIN
+      B := A * A;
+   END;
+BEGIN
+   A := 4;
+   CALCSQUARE(A);
+   DBMS_OUTPUT.PUT_LINE('square of ' || A || ' is ' || B);
+END;
 
-  -- fonksiyon kullanımı
-create or replace function fonk_getir1 return number is
-  total number(2) := 0;
-begin
-  select count(*) into total from demotable;
-  return total;
-end;
+-- fonksiyon kullanımı
+CREATE OR REPLACE FUNCTION FONK_GETIR1 RETURN NUMBER IS TOTAL NUMBER(2) := 0;
+BEGIN
+   SELECT COUNT(*) INTO TOTAL FROM DEMOTABLE;
+   RETURN TOTAL;
+END;
 
 -- fonk. çağırma
 DECLARE
-   a number(2);
+   A NUMBER(2);
 BEGIN
-   a := fonk_getir1();
-   dbms_output.put_line('Total no. of items : ' || a);
+   A := FONK_GETIR1();
+   DBMS_OUTPUT.PUT_LINE('Total no. of items : ' || A);
 END;
 
 --
 DECLARE
-   a number;
-   b number;
-   c number;
-FUNCTION findMax(x IN number, y IN number) 
-RETURN number
-IS
-    z number;
+   A NUMBER;
+   B NUMBER;
+   C NUMBER;
+   FUNCTION FINDMAX(X IN NUMBER, Y IN NUMBER) RETURN NUMBER IS
+      Z NUMBER;
+   BEGIN
+      IF X > Y THEN
+         Z := X;
+      ELSE
+         Z := Y;
+      END IF;
+   
+      RETURN Z;
+   END;
 BEGIN
-   IF x > y THEN
-      z:= x;
-   ELSE
-      z:= y;
-   END IF;
+   A := 23;
+   B := 45;
 
-   RETURN z;
-END; 
-BEGIN
-   a:= 23;
-   b:= 45;
-
-   c := findMax(a, b);
-   dbms_output.put_line(' Maximum of (23,45): ' || c);
+   C := FINDMAX(A, B);
+   DBMS_OUTPUT.PUT_LINE(' Maximum of (23,45): ' || C);
 END;
 
 -- faktöriyel hesaplayan fonk.
-declare
-  a number;
-  function fak(a in number) return number is
-  begin
-    if a = 0 then
-      return 1;
-    else
-      return a * fak(a - 1);
-    end if;
-  end;
-begin
-  dbms_output.put_line('fak. : ' || fak(4));
-end;
+DECLARE
+   A NUMBER;
+   FUNCTION FAK(A IN NUMBER) RETURN NUMBER IS
+   BEGIN
+      IF A = 0 THEN
+         RETURN 1;
+      ELSE
+         RETURN A * FAK(A - 1);
+      END IF;
+   END;
+BEGIN
+   DBMS_OUTPUT.PUT_LINE('fak. : ' || FAK(4));
+END;
 
 -- cursor kullanımı
-DECLARE 
-   total_rows number(2);
+DECLARE
+   TOTAL_ROWS NUMBER(2);
 BEGIN
-   UPDATE demotable
-   SET salary = salary + 500;
-   IF sql%notfound THEN
-      dbms_output.put_line('no record selected');
-   ELSIF sql%found THEN
-      total_rows := sql%rowcount;
-      dbms_output.put_line( total_rows || ' record selected ');
-   END IF; 
+   UPDATE DEMOTABLE SET SALARY = SALARY + 500;
+   IF SQL%NOTFOUND THEN
+      DBMS_OUTPUT.PUT_LINE('no record selected');
+   ELSIF SQL%FOUND THEN
+      TOTAL_ROWS := SQL%ROWCOUNT;
+      DBMS_OUTPUT.PUT_LINE(TOTAL_ROWS || ' record selected ');
+   END IF;
 END;
 
 -- Tüm kayıtlar
 DECLARE
-  demo_rec demotable%rowtype;
+   DEMO_REC DEMOTABLE%ROWTYPE;
 BEGIN
-  SELECT * into demo_rec FROM demotable WHERE demo_id = 1;
+   SELECT * INTO DEMO_REC FROM DEMOTABLE WHERE DEMO_ID = 1;
 
-  dbms_output.put_line('Record ID: ' || demo_rec.demo_id);
-  dbms_output.put_line('Record Name: ' || demo_rec.demo_name);
-  dbms_output.put_line('Record City: ' || demo_rec.city);
-  dbms_output.put_line('Record Salary: ' || demo_rec.salary);
+   DBMS_OUTPUT.PUT_LINE('Record ID: ' || DEMO_REC.DEMO_ID);
+   DBMS_OUTPUT.PUT_LINE('Record Name: ' || DEMO_REC.DEMO_NAME);
+   DBMS_OUTPUT.PUT_LINE('Record City: ' || DEMO_REC.CITY);
+   DBMS_OUTPUT.PUT_LINE('Record Salary: ' || DEMO_REC.SALARY);
 END;
 
 -- Cursor bazlı tüm kayıtlar
 DECLARE
-  CURSOR demo_cur is
-    SELECT demo_id, demo_name, city FROM demotable;
-  demo_rec demo_cur%rowtype;
+   CURSOR DEMO_CUR IS
+      SELECT DEMO_ID, DEMO_NAME, CITY FROM DEMOTABLE;
+   DEMO_REC DEMO_CUR%ROWTYPE;
 BEGIN
-  OPEN demo_cur;
-  LOOP
-    FETCH demo_cur
-      into demo_rec;
-    EXIT WHEN demo_cur%notfound;
-    DBMS_OUTPUT.put_line(demo_rec.demo_id || ' - ' || demo_rec.demo_name);
-  END LOOP;
+   OPEN DEMO_CUR;
+   LOOP
+      FETCH DEMO_CUR
+         INTO DEMO_REC;
+      EXIT WHEN DEMO_CUR%NOTFOUND;
+      DBMS_OUTPUT.PUT_LINE(DEMO_REC.DEMO_ID || ' - ' || DEMO_REC.DEMO_NAME);
+   END LOOP;
 END;
 
 -- cursor örneği
 DECLARE
-  CURSOR cur_bilgi IS
-    SELECT * FROM demotable WHERE demo_id = 1;
-  rec cur_bilgi%rowtype;
+   CURSOR CUR_BILGI IS
+      SELECT * FROM DEMOTABLE WHERE DEMO_ID = 1;
+   REC CUR_BILGI%ROWTYPE;
 BEGIN
-  OPEN cur_bilgi;
-  FETCH cur_bilgi
-    INTO rec;
-  DBMS_OUTPUT.put_line(rec.city);
-  CLOSE cur_bilgi;
+   OPEN CUR_BILGI;
+   FETCH CUR_BILGI
+      INTO REC;
+   DBMS_OUTPUT.PUT_LINE(REC.CITY);
+   CLOSE CUR_BILGI;
 END;
 
 -- Hata Yakalama -- Exception 
 DECLARE
-  c_id   demotable.demo_id%type := 1;
-  c_name demotable.demo_name%type;
+   C_ID   DEMOTABLE.DEMO_ID%TYPE := 1;
+   C_NAME DEMOTABLE.DEMO_NAME%TYPE;
 BEGIN
-  SELECT demo_name INTO c_name FROM demotable WHERE demo_id = c_id;
-  DBMS_OUTPUT.PUT_LINE('Name: ' || c_name);
+   SELECT DEMO_NAME INTO C_NAME FROM DEMOTABLE WHERE DEMO_ID = C_ID;
+   DBMS_OUTPUT.PUT_LINE('Name: ' || C_NAME);
 EXCEPTION
-  WHEN no_data_found THEN
-    dbms_output.put_line('No such customer!');
-  WHEN others THEN
-    dbms_output.put_line('Error!');
+   WHEN NO_DATA_FOUND THEN
+      DBMS_OUTPUT.PUT_LINE('No such customer!');
+   WHEN OTHERS THEN
+      DBMS_OUTPUT.PUT_LINE('Error!');
 END;
 
 -- Exception Örneği, kullanıcı tanımlı hata
 DECLARE
-   c_id   demotable.demo_id%type := &deger; -- &deger: kullanıcıdan değer alma
-   c_name demotable.demo_name%type;
-   ex_invalid_id EXCEPTION; -- exception tanımlama
+   C_ID   DEMOTABLE.DEMO_ID%TYPE := &DEGER; -- &deger: kullanıcıdan değer alma
+   C_NAME DEMOTABLE.DEMO_NAME%TYPE;
+   EX_INVALID_ID EXCEPTION; -- exception tanımlama
 BEGIN
-   IF c_id <= 0 THEN
-      RAISE ex_invalid_id;
+   IF C_ID <= 0 THEN
+      RAISE EX_INVALID_ID;
    ELSE
-      SELECT demo_name INTO c_name FROM demotable WHERE demo_id = c_id;
-      DBMS_OUTPUT.PUT_LINE('Name: ' || c_name);
+      SELECT DEMO_NAME INTO C_NAME FROM DEMOTABLE WHERE DEMO_ID = C_ID;
+      DBMS_OUTPUT.PUT_LINE('Name: ' || C_NAME);
    END IF;
 EXCEPTION
-   WHEN ex_invalid_id THEN
-      dbms_output.put_line('ID must be greater than zero!');
-   WHEN no_data_found THEN
-      dbms_output.put_line('No such customer!');
-   WHEN others THEN
-      dbms_output.put_line('Error!');
+   WHEN EX_INVALID_ID THEN
+      DBMS_OUTPUT.PUT_LINE('ID must be greater than zero!');
+   WHEN NO_DATA_FOUND THEN
+      DBMS_OUTPUT.PUT_LINE('No such customer!');
+   WHEN OTHERS THEN
+      DBMS_OUTPUT.PUT_LINE('Error!');
 END;
 
 -- sayı kontrolü yapan fonk.
-CREATE OR REPLACE FUNCTION is_number(p_str IN VARCHAR2) RETURN VARCHAR2
+CREATE OR REPLACE FUNCTION IS_NUMBER(P_STR IN VARCHAR2) RETURN VARCHAR2
    DETERMINISTIC
    PARALLEL_ENABLE IS
-   l_num NUMBER;
+   L_NUM NUMBER;
 BEGIN
-   l_num := to_number(p_str);
+   L_NUM := TO_NUMBER(P_STR);
    RETURN 'Y';
 EXCEPTION
-   WHEN value_error THEN
+   WHEN VALUE_ERROR THEN
       RETURN 'N';
-END is_number;
+END IS_NUMBER;
 
-DECLARE a varchar2(100);
+DECLARE A VARCHAR2(100);
 BEGIN
-a := is_number('sdf'); dbms_output.put_line(a);
+A := IS_NUMBER('sdf'); DBMS_OUTPUT.PUT_LINE(A);
 END;
 ------------
 
 -- Trigger
-CREATE OR REPLACE TRIGGER display_salary_changes
-BEFORE DELETE OR INSERT OR UPDATE ON demotable
-FOR EACH ROW
-when (NEW.DEMO_ID > 0)
+CREATE OR REPLACE TRIGGER DISPLAY_SALARY_CHANGES
+   BEFORE DELETE OR INSERT OR UPDATE ON DEMOTABLE
+   FOR EACH ROW
+   WHEN (NEW.DEMO_ID > 0)
 DECLARE
-   sal_diff number;
+   SAL_DIFF NUMBER;
 BEGIN
-   sal_diff := :NEW.salary  - :OLD.salary;
-   dbms_output.put_line('Old salary: ' || :OLD.salary);
-   dbms_output.put_line('New salary: ' || :NEW.salary);
-   dbms_output.put_line('Salary difference: ' || sal_diff);
+   SAL_DIFF := :NEW.SALARY - :OLD.SALARY;
+   DBMS_OUTPUT.PUT_LINE('Old salary: ' || :OLD.SALARY);
+   DBMS_OUTPUT.PUT_LINE('New salary: ' || :NEW.SALARY);
+   DBMS_OUTPUT.PUT_LINE('Salary difference: ' || SAL_DIFF);
 END;
 
 --*******************************************--
@@ -580,4 +581,17 @@ select current_date.get from dual;
 SELECT ADD_MONTHS(SYSDATE, 5) FROM DUAL;
 SELECT LOCALTIMESTAMP FROM DUAL;
 
+-- Java Source
+create or replace and compile java source named helloworld as
+public class helloworld
+{
+  public static String say_hello()
+  {
+         return "Hello World";
+  }
+}
+
+-- Function for calling java source class
+CREATE OR REPLACE FUNCTION HELLOWORLD RETURN VARCHAR2 AS
+   LANGUAGE JAVA NAME 'helloworld.say_hello() return java.lang.String';
 
