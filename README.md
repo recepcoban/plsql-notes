@@ -6,13 +6,13 @@
 * DROP         -- Veritabanından obje siler.
 * TRUNCATE     -- Tablodaki kayıtları içerdikleri alan ile birlikte siler.
 * COMMENT      -- Yorum ekler.
-* RENAME       -- Nesnenin asını değiştirir.
+* RENAME       -- Nesnenin adını değiştirir.
 
 <b>DML : (Data Manipulation Language):</b>
 * SELECT       -- Veritabanından kayıt okur.
 * INSERT       -- Tabloya kayıt ekler.
-* UPDATE       -- Tablodaki kayıdı günceller.
-* DELETE       -- Tablodan kayırları siler ancak kapladığı alan kalır.
+* UPDATE       -- Tablodaki kaydı günceller.
+* DELETE       -- Tablodan kayıtları siler ancak kapladığı alan kalır.
 * MERGE        -- UPSERT işlemi (ekleme veya güncelleme)
 * CALL         -- PL/SQL veya Java alt programı çalıştırır.
 
