@@ -1,4 +1,4 @@
-# Oracle - PL/SQL Notlarım
+Oracle - PL/SQL Notlarım
 
 <b>DDL : (Data Definition Language):</b>
 * CREATE       -- Veritabanında nesne yaratır.
