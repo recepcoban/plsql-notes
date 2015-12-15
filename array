@@ -1,0 +1,35 @@
+-- diziler
+-- pl/sql de dizilerin isdisleri 1 den başlar
+DECLARE
+   TYPE NAMESARRAY IS VARRAY(5) OF VARCHAR2(10);
+   TYPE GRADES IS VARRAY(5) OF INTEGER;
+   NAMES NAMESARRAY;
+   MARKS GRADES;
+   TOTAL INTEGER;
+BEGIN
+   NAMES := NAMESARRAY('Kavita', 'Pritam', 'Ayan', 'Rishav', 'Aziz');
+   MARKS := GRADES(98, 97, 78, 87, 92);
+   TOTAL := NAMES.COUNT;
+   DBMS_OUTPUT.PUT_LINE('Total ' || TOTAL || ' Students');
+   FOR I IN 1 .. TOTAL LOOP
+      DBMS_OUTPUT.PUT_LINE('Student: ' || NAMES(I) || '
+      Marks: ' || MARKS(I));
+   END LOOP;
+END;
+
+-- dizi örneği
+DECLARE
+   CURSOR C_DEMO IS
+      SELECT DEMO_NAME FROM DEMOTABLE;
+   TYPE C_LIST IS VARRAY(6) OF DEMOTABLE.DEMO_NAME%TYPE;
+   NAME_LIST C_LIST := C_LIST();
+   COUNTER   INTEGER := 0;
+BEGIN
+   FOR N IN C_DEMO LOOP
+      COUNTER := COUNTER + 1;
+      NAME_LIST.EXTEND;
+      NAME_LIST(COUNTER) := N.DEMO_NAME;
+      DBMS_OUTPUT.PUT_LINE('Demo(' || COUNTER || '):' ||
+                           NAME_LIST(COUNTER));
+   END LOOP;
+END;
