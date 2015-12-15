@@ -1,0 +1,12 @@
+-- karşılaştırma operatörleri
+DECLARE
+   NUM1 NUMBER := 10;
+   NUM2 NUMBER := 20;
+BEGIN
+   IF NUM1 > NUM2 THEN
+      -- buyuk , < kucuk , = esit , != esit degil , >= buyuk esit ,
+      DBMS_OUTPUT.PUT_LINE('buyuk');
+   ELSE
+      DBMS_OUTPUT.PUT_LINE('''kucuk''');
+   END IF;
+END;
