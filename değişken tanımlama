@@ -1,0 +1,6 @@
+-- değişken tanımlama
+DECLARE
+   DEGER VARCHAR2(100) := 'hello';
+BEGIN
+   DBMS_OUTPUT.PUT_LINE(DEGER || ' world');
+END;
