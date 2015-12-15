@@ -1,0 +1,73 @@
+-- Package
+-- Creating package
+CREATE OR REPLACE PACKAGE DEMOPACKAGE AS
+   -- Adds a record
+   PROCEDURE ADDRECORD(C_ID    DEMOTABLE.DEMO_ID%TYPE,
+                       C_NAME  DEMOTABLE.DEMO_NAME%TYPE,
+                       C_MAIL  DEMOTABLE.MAIL%TYPE,
+                       C_CITY  DEMOTABLE.CITY%TYPE,
+                       C_BIRTH DEMOTABLE.BIRTH%TYPE,
+                       C_SAL   DEMOTABLE.SALARY%TYPE);
+
+   -- Removes a record
+   PROCEDURE DELRECORD(C_ID DEMOTABLE.DEMO_ID%TYPE);
+   -- Lists all records
+   PROCEDURE LISTRECORDS;
+END DEMOPACKAGE;
+
+-- Creating package body
+CREATE OR REPLACE PACKAGE BODY DEMOPACKAGE AS
+   PROCEDURE ADDRECORD(C_ID    DEMOTABLE.DEMO_ID%TYPE,
+                       C_NAME  DEMOTABLE.DEMO_NAME%TYPE,
+                       C_MAIL  DEMOTABLE.MAIL%TYPE,
+                       C_CITY  DEMOTABLE.CITY%TYPE,
+                       C_BIRTH DEMOTABLE.BIRTH%TYPE,
+                       C_SAL   DEMOTABLE.SALARY%TYPE) IS
+   BEGIN
+      INSERT INTO DEMOTABLE
+      VALUES
+         (C_ID, C_NAME, C_MAIL, C_CITY, C_BIRTH, C_SAL);
+   END ADDRECORD;
+
+   PROCEDURE DELRECORD(C_ID DEMOTABLE.DEMO_ID%TYPE) IS
+   BEGIN
+      DELETE FROM DEMOTABLE WHERE DEMO_ID = C_ID;
+   END DELRECORD;
+
+   PROCEDURE LISTRECORDS IS
+      CURSOR C_DEMOTABLE IS
+         SELECT DEMO_NAME FROM DEMOTABLE;
+      TYPE C_LIST IS TABLE OF DEMOTABLE.DEMO_NAME%TYPE;
+      NAME_LIST C_LIST := C_LIST();
+      COUNTER   INTEGER := 0;
+   BEGIN
+      FOR N IN C_DEMOTABLE LOOP
+         COUNTER := COUNTER + 1;
+         NAME_LIST.EXTEND;
+         NAME_LIST(COUNTER) := N.DEMO_NAME;
+         DBMS_OUTPUT.PUT_LINE('Record(' || COUNTER || ')' ||
+                              NAME_LIST(COUNTER));
+      END LOOP;
+   END LISTRECORDS;
+END DEMOPACKAGE;
+
+--
+DECLARE
+   CODE DEMOTABLE.DEMO_ID%TYPE := 10;
+BEGIN
+   DEMOPACKAGE.ADDRECORD(9,
+                         'fatma',
+                         'fatma.com',
+                         'konya',
+                         TO_DATE('10102015', 'DDMMYYYY'),
+                         1000);
+   DEMOPACKAGE.ADDRECORD(10,
+                         'Subham',
+                         's',
+                         'Delhi',
+                         TO_DATE('10102015', 'DDMMYYYY'),
+                         7500);
+   DEMOPACKAGE.LISTRECORDS;
+   DEMOPACKAGE.DELRECORD(CODE);
+   DEMOPACKAGE.LISTRECORDS;
+END;
