@@ -1,0 +1,53 @@
+-- fonksiyon kullanımı
+CREATE OR REPLACE FUNCTION FONK_GETIR1 RETURN NUMBER IS TOTAL NUMBER(2) := 0;
+BEGIN
+   SELECT COUNT(*) INTO TOTAL FROM DEMOTABLE;
+   RETURN TOTAL;
+END;
+
+-- fonk. çağırma
+DECLARE
+   A NUMBER(2);
+BEGIN
+   A := FONK_GETIR1();
+   DBMS_OUTPUT.PUT_LINE('Total no. of items : ' || A);
+END;
+
+--
+DECLARE
+   A NUMBER;
+   B NUMBER;
+   C NUMBER;
+   FUNCTION FINDMAX(X IN NUMBER, Y IN NUMBER) RETURN NUMBER IS
+      Z NUMBER;
+   BEGIN
+      IF X > Y THEN
+         Z := X;
+      ELSE
+         Z := Y;
+      END IF;
+   
+      RETURN Z;
+   END;
+BEGIN
+   A := 23;
+   B := 45;
+
+   C := FINDMAX(A, B);
+   DBMS_OUTPUT.PUT_LINE(' Maximum of (23,45): ' || C);
+END;
+
+-- faktöriyel hesaplayan fonk.
+DECLARE
+   A NUMBER;
+   FUNCTION FAK(A IN NUMBER) RETURN NUMBER IS
+   BEGIN
+      IF A = 0 THEN
+         RETURN 1;
+      ELSE
+         RETURN A * FAK(A - 1);
+      END IF;
+   END;
+BEGIN
+   DBMS_OUTPUT.PUT_LINE('fak. : ' || FAK(4));
+END;
