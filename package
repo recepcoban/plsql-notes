@@ -71,3 +71,17 @@ BEGIN
    DEMOPACKAGE.DELRECORD(CODE);
    DEMOPACKAGE.LISTRECORDS;
 END;
+
+-- kare hesaplayan proc.
+DECLARE
+   A NUMBER;
+   B NUMBER;
+   PROCEDURE CALCSQUARE(A IN NUMBER) IS
+   BEGIN
+      B := A * A;
+   END;
+BEGIN
+   A := 4;
+   CALCSQUARE(A);
+   DBMS_OUTPUT.PUT_LINE('square of ' || A || ' is ' || B);
+END;
