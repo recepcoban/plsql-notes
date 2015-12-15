@@ -1,0 +1,17 @@
+-- aritmetik operatörler
+DECLARE
+   NUM1 NUMBER := 10;
+   NUM2 NUMBER := 5;
+   NUM3 NUMBER;
+BEGIN
+   NUM3 := NUM1 + NUM2; -- +
+   DBMS_OUTPUT.PUT_LINE(NUM3);
+   NUM3 := NUM1 - NUM2; -- -
+   DBMS_OUTPUT.PUT_LINE(NUM3);
+   NUM3 := NUM1 * NUM2; -- * 
+   DBMS_OUTPUT.PUT_LINE(NUM3);
+   NUM3 := NUM1 / NUM2; -- /
+   DBMS_OUTPUT.PUT_LINE(NUM3);
+   NUM3 := NUM1 ** NUM2; -- **
+   DBMS_OUTPUT.PUT_LINE(NUM3);
+END;
