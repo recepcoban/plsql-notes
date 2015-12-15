@@ -1,0 +1,7 @@
+-- anonim bir sorgu, yapı olarak genellikle bu şekildedir.
+DECLARE
+   TARIH DATE;
+BEGIN
+   SELECT SYSDATE INTO TARIH FROM DUAL;
+   DBMS_OUTPUT.PUT_LINE(TARIH);
+END;
