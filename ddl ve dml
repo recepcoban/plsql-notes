@@ -1,0 +1,50 @@
+-- create table 
+create table demotable (
+   id number(10) not null, -- not null -> not empty  
+   name varchar2(100) not null,
+   mail varchar2(100),
+   city varchar2(50),
+   constraint pk primary key (id) -- constraint primary key  
+);
+
+-- drop table  
+drop table rcoban_demo -- geri dönüşüm yapılabilir  
+drop table rcoban_demo purge; -- geri dönüşüm yapılamaz  
+
+-- insert  
+INSERT INTO DEMOTABLE
+VALUES
+   (2,
+    'recep',
+    'recep@mail.com',
+    'istanbul',
+    TO_DATE('20121010', 'YYYYMMDD'));
+
+-- rename table 
+rename rcoban_demo to demotable
+
+-- update 
+UPDATE DEMOTABLE SET CITY = 'izmir' WHERE ID = 1
+
+-- delete  
+DELETE FROM DEMOTABLE WHERE ID = 2
+
+-- select  
+SELECT * FROM DEMOTABLE
+
+-- select(rename columns)  
+SELECT ID       AS ID,
+       NAME     AS NAME,
+       MAIL     AS MAIL,
+       CITY     AS CITY,
+       BIRTHDAY AS BIRTHDAY
+  FROM DEMOTABLE
+
+-- alter operations  
+alter table demotable add salary number default 0;
+
+alter table demotable modify (mail varchar2(100));
+
+alter table demotable drop column salary;
+
+alter table demotable rename column name to demo_name;
