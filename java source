@@ -1,0 +1,14 @@
+-- Java Source
+create or replace and compile java source named helloworld as
+public class helloworld
+{
+  public static String say_hello()
+  {
+         return "Hello World";
+  }
+}
+
+-- Function for calling java source class
+CREATE OR REPLACE FUNCTION HELLOWORLD RETURN VARCHAR2 AS
+   LANGUAGE JAVA NAME 'helloworld.say_hello() return java.lang.String';
+
