@@ -1,0 +1,7 @@
+-- constant kullanımı
+DECLARE
+   NUM CONSTANT NUMBER(5, 2) := 100.15;
+BEGIN
+   -- num := 20;
+   DBMS_OUTPUT.PUT_LINE(NUM);
+END;
