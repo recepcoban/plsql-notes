@@ -1,0 +1,10 @@
+-- if then yapısı kullanımı
+DECLARE
+   MYAGE NUMBER := 28;
+BEGIN
+   IF MYAGE < 11 THEN
+      DBMS_OUTPUT.PUT_LINE(MYAGE || ', I am a child ');
+   ELSE
+      DBMS_OUTPUT.PUT_LINE(MYAGE || ', I am not a child ');
+   END IF;
+END;
